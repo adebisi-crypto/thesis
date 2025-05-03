@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dd3b-197-210-28-225.ngrok-free.app', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['dd3b-197-210-28-225.ngrok-free.app', '127.0.0.1', 'localhost', 'thesis-l3i7.onrender.com']
 CSRF_TRUSTED_ORIGINS = ['https://dd3b-197-210-28-225.ngrok-free.app']
 
 
