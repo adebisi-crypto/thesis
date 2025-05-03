@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: thesis-web
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn CardiovascularProject.wsgi:application --bind 0.0.0.0:8000"
+    envVars:
+      - key: SECRET_KEY
+      - key: DATABASE_URL
+    plan: free
