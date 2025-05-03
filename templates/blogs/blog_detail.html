@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}{{ blog.title }}{% endblock %}
+
+{% block content %}
+<article class="mt-4">
+    {% if blog.image_url %}
+        <img src="{{ blog.image_url }}" class="img-fluid rounded mb-3" alt="Blog image">
+    {% endif %}
+    <h2>{{ blog.title }}</h2>
+    <p class="text-muted">By {{ blog.author }} | {{ blog.created_at|date:"F j, Y" }}</p>
+    <div class="mb-4">{{ blog.content|linebreaks }}</div>
+</article>
+
+<hr>
+<h5 class="mb-3">Comments</h5>
+<div class="mb-4">
+    {% for comment in comments %}
+        {% if not comment.is_deleted_by_admin %}
+        <div class="mb-3 border-start ps-3">
+            <p class="mb-1"><strong>{{ comment.user }}</strong>
+                <small class="text-muted">{{ comment.created_at|timesince }} ago</small>
+            </p>
+            <p>{{ comment.content }}</p>
+
+            <!-- Voting -->
+            <div class="mb-2">
+                <a href="{% url 'vote_comment' comment.id 'up' %}" class="btn btn-sm btn-outline-success">👍</a>
+                <a href="{% url 'vote_comment' comment.id 'down' %}" class="btn btn-sm btn-outline-danger">👎</a>
+            </div>
+
+            <!-- Replies -->
+            {% for reply in comment.replies.all %}
+                {% if not reply.is_deleted_by_admin %}
+                <div class="ms-4 border-start ps-3">
+                    <p class="mb-1"><strong>{{ reply.user }}</strong>
+                        <small class="text-muted">{{ reply.created_at|timesince }} ago</small>
+                    </p>
+                    <p>{{ reply.content }}</p>
+                </div>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Reply form -->
+            {% if user.is_authenticated %}
+            <form action="{% url 'add_comment' blog.pk %}" method="post" class="ms-4 mt-2">
+                {% csrf_token %}
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <div class="mb-2">
+                    <textarea name="content" rows="2" class="form-control" placeholder="Write a reply..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-sm btn-primary">Reply</button>
+            </form>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+</div>
+
+<!-- New comment -->
+{% if user.is_authenticated %}
+<form action="{% url 'add_comment' blog.pk %}" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="new-comment" class="form-label">Add a Comment</label>
+        <textarea name="content" id="new-comment" class="form-control" rows="3" placeholder="Join the conversation..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Login</a> to leave a comment.</p>
+{% endif %}
+{% endblock %}

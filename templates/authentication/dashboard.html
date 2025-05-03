@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - CardioCheck{% endblock %}
+
+{% block content %}
+<div class="py-4">
+    <h2 class="mb-4">Welcome to Your Dashboard</h2>
+
+    {% if last_assessment %}
+        <div class="alert alert-info">
+            <strong>Last Risk Score:</strong> {{ last_assessment.score }} <br>
+            <strong>Risk Category:</strong> {{ last_assessment.risk_category }} <br>
+            <small>Assessed on {{ last_assessment.assessed_at|date:"F j, Y" }}</small>
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            You have not completed any risk assessment yet. <a href="{% url 'assess_risk' %}">Click here to get started</a>.
+        </div>
+    {% endif %}
+
+    <hr>
+
+    <h4 class="mt-4">Health Tips</h4>
+    <div class="row">
+        {% for resource in resources %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ resource.title }}</h5>
+                        <p class="card-text">{{ resource.description|truncatewords:20 }}</p>
+                        <a href="{{ resource.url }}" class="btn btn-sm btn-outline-primary" target="_blank">Read More</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No resources available yet.</p>
+        {% endfor %}
+    </div>
+
+    <h4 class="mt-4">Latest Blog Posts</h4>
+    <div class="row">
+        {% for post in blog_posts %}
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content|truncatewords:20 }}</p>
+                        <a href="{% url 'blog_detail' post.id %}" class="btn btn-sm btn-outline-secondary">View Post</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No blog posts available yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

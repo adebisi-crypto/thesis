@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Health Resources{% endblock %}
+
+{% block content %}
+<h2 class="mt-4 mb-3">Educational Resources</h2>
+
+{% if resources %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for resource in resources %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ resource.title }}</h5>
+                        <p class="card-text text-muted small">{{ resource.category }}</p>
+                        <p class="card-text">{{ resource.description|truncatewords:30 }}</p>
+                        <a href="{{ resource.url }}" target="_blank" class="btn btn-outline-primary btn-sm">Read More</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No resources available at the moment.</p>
+{% endif %}
+{% endblock %}

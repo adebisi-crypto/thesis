@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load form_filters %}
+
+{% block title %}Sign Up | CardioCheck{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg rounded-4 p-4">
+                <h2 class="text-center mb-4 fw-bold text-primary">Create Your Account</h2>
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <h5 class="mb-3 text-dark">Account Information</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {{ user_form.username.label_tag }}
+                            {{ user_form.username|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ user_form.email.label_tag }}
+                            {{ user_form.email|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ user_form.password1.label_tag }}
+                            {{ user_form.password1|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ user_form.password2.label_tag }}
+                            {{ user_form.password2|add_class:"form-control" }}
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h5 class="mb-3 text-dark">Health Profile</h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            {{ profile_form.age.label_tag }}
+                            {{ profile_form.age|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ profile_form.sex.label_tag }}
+                            {{ profile_form.sex|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ profile_form.ethnicity.label_tag }}
+                            {{ profile_form.ethnicity|add_class:"form-select" }}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check mt-2">
+                                {{ profile_form.smoker|add_class:"form-check-input" }}
+                                {{ profile_form.smoker.label_tag }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check mt-2">
+                                {{ profile_form.diabetes|add_class:"form-check-input" }}
+                                {{ profile_form.diabetes.label_tag }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h5 class="mb-3 text-dark">Health Data</h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            {{ health_form.systolic_bp.label_tag }}
+                            {{ health_form.systolic_bp|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ health_form.diastolic_bp.label_tag }}
+                            {{ health_form.diastolic_bp|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ health_form.cholesterol_ratio.label_tag }}
+                            {{ health_form.cholesterol_ratio|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ health_form.bmi.label_tag }}
+                            {{ health_form.bmi|add_class:"form-control" }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ health_form.heart_rate.label_tag }}
+                            {{ health_form.heart_rate|add_class:"form-control" }}
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary rounded-pill px-5">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

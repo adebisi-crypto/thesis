@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load form_filters %}
+
+{% block title %}CardioCheck | Risk Assessment{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold">Cardiovascular Risk Assessment</h2>
+                <p class="text-muted">Fill in your details to calculate your risk score</p>
+            </div>
+            <form method="POST" class="row g-4 bg-light rounded-4 p-4 shadow-sm">
+                {% csrf_token %}
+
+                <div class="col-md-6">
+                    <h5 class="fw-bold mb-3 text-primary">User Profile</h5>
+                    <div class="mb-3">
+                        {{ profile_form.age.label_tag }}
+                        {{ profile_form.age|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        {{ profile_form.sex.label_tag }}
+                        {{ profile_form.sex|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        {{ profile_form.ethnicity.label_tag }}
+                        {{ profile_form.ethnicity|add_class:"form-select" }}
+                    </div>
+                    <div class="form-check mb-2">
+                        {{ profile_form.smoker|add_class:"form-check-input" }}
+                        {{ profile_form.smoker.label_tag }}
+                    </div>
+                    <div class="form-check">
+                        {{ profile_form.diabetes|add_class:"form-check-input" }}
+                        {{ profile_form.diabetes.label_tag }}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h5 class="fw-bold mb-3 text-success">Health Data</h5>
+                    <div class="mb-3">
+                        {{ health_form.systolic_bp.label_tag }}
+                        {{ health_form.systolic_bp|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        {{ health_form.diastolic_bp.label_tag }}
+                        {{ health_form.diastolic_bp|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        {{ health_form.cholesterol_ratio.label_tag }}
+                        {{ health_form.cholesterol_ratio|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        {{ health_form.bmi.label_tag }}
+                        {{ health_form.bmi|add_class:"form-control" }}
+                    </div>
+                    <div class="mb-3">
+                        {{ health_form.heart_rate.label_tag }}
+                        {{ health_form.heart_rate|add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <div class="col-12 text-center mt-3">
+                    <button type="submit" class="btn btn-success px-5 rounded-pill">Assess Risk</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
